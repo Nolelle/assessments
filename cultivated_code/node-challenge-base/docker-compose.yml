@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports: 
+      - '5432:5432'
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+  api:
+    container_name: api
+    volumes: 
+      - './:/home/app'
+    build:
+      context: .
+    environment:
+      PGHOST: postgres
+      DB_SCHEMA: postgres
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      DB_HOST: postgres
+      PORT: 3000
+    depends_on:
+      - postgres
+    ports:
+      - '3000:3000'
+    command: tail -F anything
+        
+volumes:
+  postgres-db:
