@@ -28,7 +28,7 @@ services:
       - postgres
     ports:
       - '3000:3000'
-    command: tail -F anything
+    # command: tail -F anything
         
 volumes:
   postgres-db:
