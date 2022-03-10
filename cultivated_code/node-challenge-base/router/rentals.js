@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res, err) => {
+router.post("/", (req, res) => {
   const name = req.body.name;
   const model = req.body.model;
   const start_date = req.body.start_date;

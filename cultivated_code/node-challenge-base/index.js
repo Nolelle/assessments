@@ -22,7 +22,7 @@ const main = async () => {
   });
 
   // Application setup
-  app.get("/", (req, res) => {
+  app.get("/health", (req, res) => {
     res.json({ success: true });
   });
 
