@@ -12,7 +12,7 @@ const createDbConnection = require("./services/setup/createDbConnection");
 const requestLogFormat =
   ":method :url :status :res[content-length] - :response-time ms";
 
-const main = async () => {
+const main = () => {
   const db = createDbConnection();
   app.use(morgan(requestLogFormat));
   app.use(bodyParser.urlencoded({ extended: true }));
