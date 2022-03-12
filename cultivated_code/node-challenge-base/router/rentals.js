@@ -23,15 +23,19 @@ router.post("/", async (req, res) => {
         .status(422)
         .json({ error: "Start date must not be greater than the end date" });
     }
-    // return res.status(200).json(req.body);
-    const queryString = `
+    const postString = `
   INSERT INTO rentals (name, model, start_date, end_date)
   VALUES
   ($1,$2,$3,$4)`;
-    const values = [name, model, start_date, end_date];
 
-    const newRental = await pool.query(queryString, values);
-    res.status(200).json(newRental);
+    const values = [name, model, start_date, end_date];
+    const queryString = `SELECT * 
+    FROM rentals 
+    WHERE id=(SELECT max(id) FROM rentals)`;
+
+    const newRental = await pool.query(postString, values);
+    const logRental = await pool.query(queryString);
+    res.status(200).json(logRental.rows[0]);
   } catch (err) {
     console.error(err.message);
   }
