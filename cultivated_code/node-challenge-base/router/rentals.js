@@ -13,6 +13,7 @@ router.post("/", async (req, res) => {
     const d1 = new Date(start_date);
     const d2 = new Date(end_date);
 
+    //Name, Model Date Validation
     if (!name || !model) {
       return res
         .status(422)
@@ -23,6 +24,8 @@ router.post("/", async (req, res) => {
         .status(422)
         .json({ error: "Start date must not be greater than the end date" });
     }
+
+    //Post to Database after Validation
     const postString = `
   INSERT INTO rentals (name, model, start_date, end_date)
   VALUES
