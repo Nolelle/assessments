@@ -8,7 +8,10 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000;
 const allRouters = require("./router/index");
 const createRoutes = require("./services/setup/createRoutes");
-const createDbConnection = require("./services/setup/createDbConnection");
+const {
+  pool,
+  createDbConnection,
+} = require("./services/setup/createDbConnection");
 const requestLogFormat =
   ":method :url :status :res[content-length] - :response-time ms";
 
