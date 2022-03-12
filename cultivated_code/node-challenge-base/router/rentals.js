@@ -28,13 +28,14 @@ router.post("/", async (req, res) => {
   VALUES
   ($1,$2,$3,$4)`;
 
-    const values = [name, model, start_date, end_date];
+    const rentalValues = [name, model, start_date, end_date];
     const queryString = `SELECT * 
     FROM rentals 
     WHERE id=(SELECT max(id) FROM rentals)`;
 
-    const newRental = await pool.query(postString, values);
+    const newRental = await pool.query(postString, rentalValues);
     const logRental = await pool.query(queryString);
+
     res.status(200).json(logRental.rows[0]);
   } catch (err) {
     console.error(err.message);
