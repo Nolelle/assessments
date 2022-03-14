@@ -3,7 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 const PORT = 3000 || process.env.PORT;
-const { getAllRecipiesNames } = require("./helpers.js");
+const { getAllRecipesNames, findRecipe } = require("./helpers.js");
 const data = require("./data.json");
 
 //middleware
@@ -14,19 +14,19 @@ app.use(express.json());
 //routes
 app.get("/recipes", async (req, res) => {
   try {
-    const allRecipieNames = getAllRecipiesNames(data);
-    res.status(200).json({ recipeNames: allRecipieNames });
+    const allRecipeNames = getAllRecipesNames(data);
+    res.status(200).json({ recipeNames: allRecipeNames });
   } catch (err) {
     console.error(err.message);
   }
 });
 
-app.get("/recipes/details/:recipe", async (rec, res) => {
+app.get("/recipes/details/:recipe", async (req, res) => {
   try {
-    const { recipeName } = req.params;
-    res.status(200).json({});
+    const recipeName = req.params.recipe;
+    res.status(200).json(findRecipe(data, recipeName));
   } catch (err) {
-    console.err(err.message);
+    console.error(err.message);
   }
 });
 

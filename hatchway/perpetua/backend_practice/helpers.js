@@ -1,19 +1,32 @@
 const data = require("./data.json");
 
-const getAllRecipiesNames = (data) => {
-  const recipieNames = [];
-  for (const recipes in data) {
-    for (const recipe of recipes) {
-      if (recipe.name) {
-        recipies.push(recipe.name);
-      }
-    }
+const getAllRecipesNames = (data) => {
+  const recipeNames = [];
+  const recipes = data.recipes;
+  for (let recipe of recipes) {
+    recipeNames.push(recipe.name);
   }
-  return recipieNames;
+  return recipeNames;
 };
 
-console.log(getAllRecipiesNames(data, "data"));
+const findRecipe = (data, name) => {
+  const content = { details: {} };
+  const empty = {};
+  const recipes = data.recipes;
+  for (let recipe of recipes) {
+    if (recipe.name === name) {
+      content.details.ingredients = recipe.ingredients;
+      const instructionCount = recipe.instructions.length;
+      content.details.numSteps = instructionCount;
+      return content;
+    }
+  }
+  return empty;
+};
 
-// module.exports = {
-//   getAllRecipiesNames,
-// };
+// console.log(findRecipe(data, "garlicPasta"));
+
+module.exports = {
+  getAllRecipesNames,
+  findRecipe,
+};
