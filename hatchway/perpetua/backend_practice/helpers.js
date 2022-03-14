@@ -1,4 +1,9 @@
 const data = require("./data.json");
+const newItem = {
+  name: "butteredBagel",
+  ingredients: ["1 bagel", "butter"],
+  instructions: ["cut the bagel", "spread butter on bagel"],
+};
 
 const getAllRecipesNames = (data) => {
   const recipeNames = [];
@@ -24,9 +29,15 @@ const findRecipe = (data, name) => {
   return empty;
 };
 
-// console.log(findRecipe(data, "garlicPasta"));
+const postNewRecipe = (data, recipe) => {
+  const recipes = data.recipes;
+  recipes.push(recipe);
+};
 
+// console.log(postNewRecipe(data, newItem));
+// postNewRecipe(data, newItem);
 module.exports = {
   getAllRecipesNames,
   findRecipe,
+  postNewRecipe,
 };
