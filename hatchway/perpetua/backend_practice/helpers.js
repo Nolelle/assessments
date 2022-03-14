@@ -4,6 +4,11 @@ const newItem = {
   ingredients: ["1 bagel", "butter"],
   instructions: ["cut the bagel", "spread butter on bagel"],
 };
+const updatedItem = {
+  name: "butteredBagel",
+  ingredients: ["1 bagel", "2 tbsp butter"],
+  instructions: ["cut the bagel", "spread butter on bagel"],
+};
 
 const getAllRecipesNames = (data) => {
   const recipeNames = [];
@@ -34,10 +39,22 @@ const postNewRecipe = (data, recipe) => {
   recipes.push(recipe);
 };
 
-// console.log(postNewRecipe(data, newItem));
+const updateRecipe = (data, updatedRecipe) => {
+  const recipes = data.recipes;
+  for (let recipe of recipes) {
+    if (recipe.name === updatedRecipe.name) {
+      recipe.ingredients = updatedRecipe.ingredients;
+      recipe.instructions = updatedRecipe.instructions;
+    }
+  }
+};
+
 // postNewRecipe(data, newItem);
+// updateRecipe(data, updatedItem);
+
 module.exports = {
   getAllRecipesNames,
   findRecipe,
   postNewRecipe,
+  updateRecipe,
 };

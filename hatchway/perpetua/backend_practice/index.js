@@ -7,6 +7,7 @@ const {
   getAllRecipesNames,
   findRecipe,
   postNewRecipe,
+  updateRecipe,
 } = require("./helpers.js");
 const data = require("./data.json");
 
@@ -47,8 +48,27 @@ app.post("/recipes", async (req, res) => {
       }
     }
     postNewRecipe(data, newRecipe);
-    console.log(data);
     res.status(201).json();
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.put("/recipes", async (req, res) => {
+  try {
+    const updatedRecipe = req.body;
+    const updatedRecipeName = req.body.name;
+    const recipes = data.recipes;
+    for (const recipe of recipes) {
+      if (recipe.name === updatedRecipeName) {
+        updateRecipe(data, updatedRecipe);
+        res.status(204).json();
+      }
+    }
+    console.log(data.recipes);
+    res.status(400).json({
+      error: "Recipe does not exist",
+    });
   } catch (err) {
     console.error(err.message);
   }
