@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    container_name: api-elixir
+    container_name: elixir_api
     build:
       context: .
     environment:

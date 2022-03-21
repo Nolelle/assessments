@@ -5,19 +5,10 @@ defmodule CarWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", CarWeb do
+  scope "/api/v1", CarWeb do
     pipe_through :api
+    resources "/rentals", CarsController, except: [:new, :edit]
   end
-
-  pipeline :browser do
-    plug(:accepts, ["html"])
-  end
-
-   scope "/", CarWeb do
-    pipe_through :browser
-    get "/", DefaultController, :index
-  end
-
 
   # Enables the Swoosh mailbox preview in development.
   #
