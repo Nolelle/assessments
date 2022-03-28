@@ -6,16 +6,16 @@ defmodule CarWeb.RentalControllerTest do
   alias Car.Agency.Rental
 
   @create_attrs %{
-    end_date: ~D[2022-03-22],
+    end_date: "some end_date",
     model: "some model",
     name: "some name",
-    start_date: ~D[2022-03-22]
+    start_date: "some start_date"
   }
   @update_attrs %{
-    end_date: ~D[2022-03-23],
+    end_date: "some updated end_date",
     model: "some updated model",
     name: "some updated name",
-    start_date: ~D[2022-03-23]
+    start_date: "some updated start_date"
   }
   @invalid_attrs %{end_date: nil, model: nil, name: nil, start_date: nil}
 
@@ -39,10 +39,10 @@ defmodule CarWeb.RentalControllerTest do
 
       assert %{
                "id" => ^id,
-               "end_date" => "2022-03-22",
+               "end_date" => "some end_date",
                "model" => "some model",
                "name" => "some name",
-               "start_date" => "2022-03-22"
+               "start_date" => "some start_date"
              } = json_response(conn, 200)["data"]
     end
 
@@ -63,10 +63,10 @@ defmodule CarWeb.RentalControllerTest do
 
       assert %{
                "id" => ^id,
-               "end_date" => "2022-03-23",
+               "end_date" => "some updated end_date",
                "model" => "some updated model",
                "name" => "some updated name",
-               "start_date" => "2022-03-23"
+               "start_date" => "some updated start_date"
              } = json_response(conn, 200)["data"]
     end
 

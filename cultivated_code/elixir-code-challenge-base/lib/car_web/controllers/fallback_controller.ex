@@ -6,11 +6,18 @@ defmodule CarWeb.FallbackController do
   """
   use CarWeb, :controller
 
-  # This clause is an example of how to handle resources that cannot be found.
-  def call(conn, {:error, :not_found}) do
+  # # This clause is an example of how to handle resources that cannot be found.
+  # def call(conn, {:error, :not_found}) do
+  #   conn
+  #   |> put_status(:not_found)
+  #   |> put_view(CarWeb.ErrorView)
+  #   |> render(:"404")
+  # end
+
+  def call(conn, {:error, %Ecto.Changeset{}}) do
     conn
-    |> put_status(:not_found)
+    |> put_status(:unprocessable_entity)
     |> put_view(CarWeb.ErrorView)
-    |> render(:"404")
-  end
+    |> render(:"422")
+end
 end

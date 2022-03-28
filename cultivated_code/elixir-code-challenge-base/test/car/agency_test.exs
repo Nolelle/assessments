@@ -21,13 +21,13 @@ defmodule Car.AgencyTest do
     end
 
     test "create_rental/1 with valid data creates a rental" do
-      valid_attrs = %{end_date: ~D[2022-03-22], model: "some model", name: "some name", start_date: ~D[2022-03-22]}
+      valid_attrs = %{end_date: "some end_date", model: "some model", name: "some name", start_date: "some start_date"}
 
       assert {:ok, %Rental{} = rental} = Agency.create_rental(valid_attrs)
-      assert rental.end_date == ~D[2022-03-22]
+      assert rental.end_date == "some end_date"
       assert rental.model == "some model"
       assert rental.name == "some name"
-      assert rental.start_date == ~D[2022-03-22]
+      assert rental.start_date == "some start_date"
     end
 
     test "create_rental/1 with invalid data returns error changeset" do
@@ -36,13 +36,13 @@ defmodule Car.AgencyTest do
 
     test "update_rental/2 with valid data updates the rental" do
       rental = rental_fixture()
-      update_attrs = %{end_date: ~D[2022-03-23], model: "some updated model", name: "some updated name", start_date: ~D[2022-03-23]}
+      update_attrs = %{end_date: "some updated end_date", model: "some updated model", name: "some updated name", start_date: "some updated start_date"}
 
       assert {:ok, %Rental{} = rental} = Agency.update_rental(rental, update_attrs)
-      assert rental.end_date == ~D[2022-03-23]
+      assert rental.end_date == "some updated end_date"
       assert rental.model == "some updated model"
       assert rental.name == "some updated name"
-      assert rental.start_date == ~D[2022-03-23]
+      assert rental.start_date == "some updated start_date"
     end
 
     test "update_rental/2 with invalid data returns error changeset" do

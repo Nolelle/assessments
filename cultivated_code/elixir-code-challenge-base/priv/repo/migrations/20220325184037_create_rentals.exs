@@ -5,8 +5,8 @@ defmodule Car.Repo.Migrations.CreateRentals do
     create table(:rentals) do
       add :name, :string
       add :model, :string
-      add :start_date, :date
-      add :end_date, :date
+      add :start_date, :string
+      add :end_date, :string
 
       timestamps()
     end

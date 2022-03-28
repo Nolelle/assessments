@@ -5,9 +5,10 @@ defmodule CarWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", CarWeb do
+  scope "/api/v1", CarWeb do
     pipe_through :api
-    resources "/rentals", RentalController, except: [:new, :edit]
+    
+    resources "/rentals", RentalController, except: [:new, :edit] 
   end
 
   # Enables the Swoosh mailbox preview in development.
@@ -17,7 +18,6 @@ defmodule CarWeb.Router do
   if Mix.env() == :dev do
     scope "/dev" do
       pipe_through [:fetch_session, :protect_from_forgery]
-
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end

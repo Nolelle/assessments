@@ -11,10 +11,10 @@ defmodule Car.AgencyFixtures do
     {:ok, rental} =
       attrs
       |> Enum.into(%{
-        end_date: ~D[2022-03-22],
+        end_date: "some end_date",
         model: "some model",
         name: "some name",
-        start_date: ~D[2022-03-22]
+        start_date: "some start_date"
       })
       |> Car.Agency.create_rental()
 
