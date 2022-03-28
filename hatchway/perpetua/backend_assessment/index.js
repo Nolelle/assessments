@@ -10,9 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 //routes
-app.get("/recipes", async (req, res) => {
+app.get("/api/ping", async (req, res) => {
   try {
-    res.status(200).json();
+    res.status(200).json({ success: true });
   } catch (err) {
     console.error(err.message);
   }
