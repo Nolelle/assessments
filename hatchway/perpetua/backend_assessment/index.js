@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 const PORT = 3000 || process.env.PORT;
+const { getPost } = require("./helpers/helperFunctions");
 
 //middleware
 app.use(morgan("dev"));
@@ -18,25 +19,12 @@ app.get("/api/ping", async (req, res) => {
   }
 });
 
-app.get("/recipes/details/:recipe", async (req, res) => {
+app.get("/api/posts", async (req, res) => {
   try {
-    res.status(200).json(findRecipe(data, recipeName));
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-app.post("/recipes", async (req, res) => {
-  try {
-    res.status(400).json();
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-app.put("/recipes", async (req, res) => {
-  try {
-    res.status(204).json();
+    const { tags, sortBy, direction } = req.query;
+    const data = await getPost(tags);
+    const posts = data.data;
+    res.status(200).json(posts);
   } catch (err) {
     console.error(err.message);
   }
