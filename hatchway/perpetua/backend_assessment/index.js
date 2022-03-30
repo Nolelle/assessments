@@ -22,6 +22,18 @@ app.get("/api/ping", async (req, res) => {
 app.get("/api/posts", async (req, res) => {
   try {
     const { tags, sortBy, direction } = req.query;
+    if (!tags) {
+      res.status(400).json({ error: "Tags parameter is required" });
+    }
+    if (!sortBy || sortBy !== ("id" || "reads" || "likes" || "popularity")) {
+      res.status(400).json({ error: "sortBy parameter is invalid or empty" });
+    }
+    if (!direction || direction !== ("asc" || "desc")) {
+      res
+        .status(400)
+        .json({ error: "direction parameter is required or empty" });
+    }
+
     const data = await getPost(tags);
     const posts = data.data;
     res.status(200).json(posts);
