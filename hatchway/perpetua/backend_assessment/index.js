@@ -25,24 +25,25 @@ app.get("/api/posts", async (req, res) => {
     //Take on default value of id and asc if sortBy and direction values are undefined/empty
     const sortBy = req.query.sortBy || "id";
     const direction = req.query.direction || "asc";
+    const directionValuesArray = ["asc", "desc"];
+    const sortByValuesArray = ["id", "reads", "popularity", "likes"];
     console.log(tags);
     console.log(sortBy);
     console.log(direction);
+    const checkSortBy = sortByValuesArray.some((string) => string === sortBy);
+    const checkDirection = directionValuesArray.some(
+      (string) => string === direction
+    );
 
-    //Check for invalid values for parameters
     if (!tags) {
       res.status(400).json({ error: "Tags parameter is required" });
     }
-    if (
-      sortBy !== "id" ||
-      sortBy !== "reads" ||
-      sortBy !== "likes" ||
-      sortBy !== "popularity"
-    ) {
+    //Check if sortBy and direction have valid parameters
+    if (!checkSortBy) {
       res.status(400).json({ error: "sortBy parameter is invalid" });
     }
-    if (direction !== "asc" || direction !== "desc") {
-      res.status(400).json({ error: "direction parameter is required" });
+    if (!checkDirection) {
+      res.status(400).json({ error: "direction parameter is invalid" });
     }
 
     const data = await getPost(tags);
