@@ -3,7 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 const PORT = 3000 || process.env.PORT;
-const { getPost } = require("./helpers/helperFunctions");
+const { getPosts } = require("./helpers/helperFunctions");
 
 //middleware
 app.use(morgan("dev"));
@@ -27,9 +27,9 @@ app.get("/api/posts", async (req, res) => {
     const direction = req.query.direction || "asc";
     const directionValuesArray = ["asc", "desc"];
     const sortByValuesArray = ["id", "reads", "popularity", "likes"];
-    console.log(tags);
-    console.log(sortBy);
-    console.log(direction);
+    // console.log(tags);
+    // console.log(sortBy);
+    // console.log(direction);
     const checkSortBy = sortByValuesArray.some((string) => string === sortBy);
     const checkDirection = directionValuesArray.some(
       (string) => string === direction
@@ -46,7 +46,7 @@ app.get("/api/posts", async (req, res) => {
       res.status(400).json({ error: "direction parameter is invalid" });
     }
 
-    const data = await getPost(tags);
+    const data = await getPosts(tags);
     const posts = data.data;
     res.status(200).json(posts);
   } catch (err) {
