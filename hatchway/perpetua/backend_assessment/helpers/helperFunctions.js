@@ -22,20 +22,22 @@ const getPosts = async (tag, sortBy, direction) => {
     });
     if (direction === "asc") {
       filteredPosts.sort(function (a, b) {
-        return a.likes - b.likes;
+        return a.sortBy - b.sortBy;
       });
     } else {
       filteredPosts.sort(function (a, b) {
-        return b.likes - a.likes;
+        return b.sortBy - a.sortBy;
       });
     }
     console.log(filteredPosts);
-    return filteredPosts;
+    const finishedPosts = {};
+    finishedPosts.posts = filteredPosts;
+    return finishedPosts;
   } catch (err) {
     console.error(err.message);
   }
 };
 
-const tags = "history,tech";
-const answer = getPosts(tags, "likes", "desc");
+// const tags = "history,tech";
+// const answer = getPosts(tags, "likes", "desc");
 module.exports = { getPosts };

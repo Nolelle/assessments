@@ -27,9 +27,6 @@ app.get("/api/posts", async (req, res) => {
     const direction = req.query.direction || "asc";
     const directionValuesArray = ["asc", "desc"];
     const sortByValuesArray = ["id", "reads", "popularity", "likes"];
-    // console.log(tags);
-    // console.log(sortBy);
-    // console.log(direction);
     const checkSortBy = sortByValuesArray.some((string) => string === sortBy);
     const checkDirection = directionValuesArray.some(
       (string) => string === direction
@@ -38,6 +35,7 @@ app.get("/api/posts", async (req, res) => {
     if (!tags) {
       res.status(400).json({ error: "Tags parameter is required" });
     }
+
     //Check if sortBy and direction have valid parameters
     if (!checkSortBy) {
       res.status(400).json({ error: "sortBy parameter is invalid" });
@@ -46,9 +44,8 @@ app.get("/api/posts", async (req, res) => {
       res.status(400).json({ error: "direction parameter is invalid" });
     }
 
-    const data = await getPosts(tags);
-    const posts = data.data;
-    res.status(200).json(posts);
+    const data = await getPosts(tags, sortBy, direction);
+    res.status(200).json(data);
   } catch (err) {
     console.error(err.message);
   }
