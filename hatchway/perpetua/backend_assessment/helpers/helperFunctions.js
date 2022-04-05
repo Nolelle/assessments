@@ -1,11 +1,11 @@
 const axios = require("axios");
-const { request } = require("express");
+
 const getPosts = async (tag, sortBy, direction) => {
   try {
     const tagsArray = tag.split(",");
     const requests = tagsArray.map((tag) =>
       axios.get(
-        `https://api.hatchways.io/assessment/blog/posts?tag=${tag}&sortBy=${sortBy}&direction=${direction}`
+        `https://api.hatchways.io/assessment/solution/posts?tags=${tag}&sortBy=${sortBy}&direction=${direction}`
       )
     );
     const results = await Promise.all(requests);
@@ -13,13 +13,22 @@ const getPosts = async (tag, sortBy, direction) => {
     const filteredPosts = [];
     const filteredPostsID = [];
     posts.forEach((ele) => {
-      ele.forEach((ele2) => {
-        if (!filteredPostsID.includes(ele2.id)) {
-          filteredPosts.push(ele2);
-          filteredPostsID.push(ele2.id);
+      for (const obj of ele) {
+        if (!filteredPostsID.includes(obj.id)) {
+          filteredPosts.push(obj);
+          filteredPostsID.push(obj.id);
         }
-      });
+      }
     });
+    if (direction === "asc") {
+      filteredPosts.sort(function (a, b) {
+        return a.likes - b.likes;
+      });
+    } else {
+      filteredPosts.sort(function (a, b) {
+        return b.likes - a.likes;
+      });
+    }
     console.log(filteredPosts);
     return filteredPosts;
   } catch (err) {
@@ -28,6 +37,5 @@ const getPosts = async (tag, sortBy, direction) => {
 };
 
 const tags = "history,tech";
-const answer = getPosts(tags);
-
+const answer = getPosts(tags, "likes", "desc");
 module.exports = { getPosts };
