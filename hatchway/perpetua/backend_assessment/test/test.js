@@ -1,43 +1,28 @@
 const chai = require("chai");
 const request = require("supertest");
-const expect = chai.expect;
-const index = "../index.js";
+const chaiHttp = require("chai-http");
+const should = chai.should;
+const server = require("../index");
+chai.use(chaiHttp);
 
-describe("Posts", function () {
-  describe("GET /api/ping", function () {
-    it("should return 200 OK with sucess:true", async function () {
-      const response = await request(index)
-        .get("/api/ping")
-        .expect(200)
-        .expect("Content-Type", /json/);
-    });
+describe("GET /api/ping", () => {
+  it("should return 200 OK with sucess:true", (done) => {
+    request(server)
+      .get("/api/ping")
+      .expect((res) => {
+        res.body = { sucess: true };
+      })
+      .expect(200, done);
   });
+});
 
-  describe("GET /api/post", function () {
-    it("should return 200 OK with posts.", async function () {
-      const response = await request(index)
-        .get("/api/post")
-        .expect(200)
-        .expect("Content-Type", /json/);
-    });
-
-    it("should return 400 with error: Tags parameter is required", async function () {
-      const response = await request(index)
-        .get("/api/post")
-        .expect(400)
-        .expect("Content-Type", /json/);
-    });
-    it("should return 400 with error: sortBy parameter was invalid.", async function () {
-      const response = await request(index)
-        .get("/api/post")
-        .expect(400)
-        .expect("Content-Type", /json/);
-    });
-    it("should return 400 with error: direction parameter was invalid.", async function () {
-      const response = await request(index)
-        .get("/api/post")
-        .expect(400)
-        .expect("Content-Type", /json/);
-    });
+describe("GET /api/posts", () => {
+  it("should return ", (done) => {
+    request(server)
+      .get("/api/posts")
+      .expect((res) => {
+        res.body = { sucess: true };
+      })
+      .expect(200, done);
   });
 });
